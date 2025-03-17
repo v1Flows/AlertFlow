@@ -1,6 +1,6 @@
 module github.com/v1Flows/alertFlow/services/backend
 
-go 1.23.5
+go 1.24.0
 
 require (
 	github.com/uptrace/bun v1.2.11
