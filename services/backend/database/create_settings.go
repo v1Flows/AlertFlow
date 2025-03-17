@@ -1,8 +1,9 @@
 package database
 
 import (
-	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
 	"context"
+
+	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
 
 	functions_runner "github.com/v1Flows/alertFlow/services/backend/functions/runner"
 
@@ -22,7 +23,7 @@ func createDefaultSettings(db *bun.DB) {
 	if count == 0 {
 		log.Info("No existing settings found. Creating default...")
 		settings.ID = 1
-		settings.AlertFlowRunnerAutoJoinToken, err = functions_runner.GenerateAlertFlowAutoJoinToken(db)
+		settings.SharedRunnerAutoJoinToken, err = functions_runner.GenerateAlertFlowAutoJoinToken(db)
 		if err != nil {
 			panic(err)
 		}

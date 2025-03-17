@@ -1,12 +1,13 @@
 package projects
 
 import (
+	"errors"
+	"net/http"
+
 	"github.com/v1Flows/alertFlow/services/backend/functions/gatekeeper"
 	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
 	functions_project "github.com/v1Flows/alertFlow/services/backend/functions/project"
 	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
-	"errors"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
@@ -45,7 +46,7 @@ func UpdateProject(context *gin.Context, db *bun.DB) {
 		return
 	}
 
-	_, err = db.NewUpdate().Model(&project).Column("name", "description", "alertflow_runners", "icon", "color", "enable_auto_runners", "disable_runner_join").Where("id = ?", projectID).Exec(context)
+	_, err = db.NewUpdate().Model(&project).Column("name", "description", "shared_runners", "icon", "color", "enable_auto_runners", "disable_runner_join").Where("id = ?", projectID).Exec(context)
 	if err != nil {
 		httperror.InternalServerError(context, "Error updating project informations on db", err)
 	}

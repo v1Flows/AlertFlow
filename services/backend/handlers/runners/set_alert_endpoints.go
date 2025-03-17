@@ -19,7 +19,7 @@ func SetRunnerAlertEndpoints(context *gin.Context, db *bun.DB) {
 		return
 	}
 
-	_, err := db.NewUpdate().Model(&runner).Where("id = ?", id).Set("alert_endpoints = ?", runner.AlertEndpoints).Exec(context)
+	_, err := db.NewUpdate().Model(&runner).Where("id = ?", id).Set("alert_endpoints = ?", runner.Endpoints).Exec(context)
 	if err != nil {
 		httperror.InternalServerError(context, "Error updating runner alert endpoints on db", err)
 		return

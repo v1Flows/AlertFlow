@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
+	shared_models "github.com/v1Flows/shared-library/pkg/models"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/uptrace/bun"
@@ -53,14 +54,19 @@ func checkHangingExecutions(db *bun.DB) {
 			log.Info("Bot: Execution is hanging, marking as error", execution.ID)
 
 			// add an error step
-			_, err := db.NewInsert().Model(&models.ExecutionSteps{
+			_, err := db.NewInsert().Model(&shared_models.ExecutionSteps{
 				ExecutionID: execution.ID.String(),
-				Action: models.Actions{
+				Action: shared_models.Action{
 					Name: "Automated Check",
 				},
-				Messages: []string{
-					"All steps finished since 15 minutes but execution is still running",
-					"Marking as error",
+				Messages: []shared_models.Message{
+					{
+						Title: "Automated Check",
+						Lines: []string{
+							"All steps finished since 15 minutes but execution is still running",
+							"Marking as error",
+						},
+					},
 				},
 				Status:     "error",
 				FinishedAt: time.Now(),
