@@ -23,7 +23,7 @@ export default async function AdminFlowsPage() {
           projects={projects.data.projects}
           runners={[
             ...runners.data.self_hosted_runners,
-            ...runners.data.alertflow_runners,
+            ...runners.data.shared_runners,
           ]}
         />
       ) : (

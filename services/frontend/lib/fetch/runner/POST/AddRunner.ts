@@ -21,7 +21,7 @@ type SuccessResponse = {
 export default async function AddRunner({
   projectId,
   name,
-  alertflow_runner,
+  shared_runner,
 }: any): Promise<SuccessResponse | ErrorResponse> {
   try {
     const cookieStore = await cookies();
@@ -43,7 +43,7 @@ export default async function AddRunner({
           "Content-Type": "application/json",
           Authorization: token.value,
         },
-        body: JSON.stringify({ name, project_id: projectId, alertflow_runner }),
+        body: JSON.stringify({ name, project_id: projectId, shared_runner }),
       },
     );
 

@@ -53,10 +53,10 @@ export default function ProjectsStats({
               </div>
               <div>
                 <p className="text-md font-bold">
-                  {projects.filter((p: any) => !p.alertflow_runners).length}
+                  {projects.filter((p: any) => !p.shared_runners).length}
                 </p>
                 <p className="text-sm text-default-500">
-                  Projects without AlertFlow Runners
+                  Projects without Shared Runners
                 </p>
               </div>
             </div>

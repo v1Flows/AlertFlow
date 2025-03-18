@@ -1,11 +1,12 @@
 package admin_stats
 
 import (
-	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
-	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
+	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/uptrace/bun"
@@ -14,7 +15,7 @@ import (
 func FailedExecutionsStats(interval string, context *gin.Context, db *bun.DB) []models.Stats {
 	var stats []models.Stats
 	err := db.NewSelect().
-		TableExpr("(SELECT DATE(created_at) as date, COUNT(*) as value FROM executions WHERE error = true AND created_at >= NOW() - INTERVAL '"+interval+" days' GROUP BY DATE(created_at)) AS subquery").
+		TableExpr("(SELECT DATE(created_at) as date, COUNT(*) as value FROM executions WHERE status = 'error' AND created_at >= NOW() - INTERVAL '"+interval+" days' GROUP BY DATE(created_at)) AS subquery").
 		Scan(context, &stats)
 	if err != nil {
 		httperror.InternalServerError(context, "Error collecting execution stats from db", err)

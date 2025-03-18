@@ -21,35 +21,33 @@ export default function ProjectRunnerDetails({ project }: { project: any }) {
 
   const addRunnerModal = useDisclosure();
 
-  const [alertflowRunners, setAlertflowRunners] = useState(
-    project.alertflow_runners,
-  );
+  const [sharedRunners, setSharedRunners] = useState(project.shared_runners);
   const [autoJoin, setAutoJoin] = useState(project.enable_auto_runners);
   const [disableJoin, setDisableJoin] = useState(project.disable_runner_join);
 
   useEffect(() => {
-    setAlertflowRunners(project.alertflow_runners);
+    setSharedRunners(project.shared_runners);
     setAutoJoin(project.enable_auto_runners);
     setDisableJoin(project.disable_runner_join);
   }, [project]);
 
   useEffect(() => {
     if (
-      alertflowRunners === project.alertflow_runners &&
+      sharedRunners === project.shared_runners &&
       autoJoin === project.enable_auto_runners &&
       disableJoin === project.disable_runner_join
     ) {
       return;
     }
     updateProject();
-  }, [alertflowRunners, autoJoin, disableJoin]);
+  }, [sharedRunners, autoJoin, disableJoin]);
 
   async function updateProject() {
     const response = (await UpdateProject(
       project.id,
       project.name,
       project.description,
-      alertflowRunners,
+      sharedRunners,
       project.icon,
       project.color,
       autoJoin,
@@ -101,17 +99,17 @@ export default function ProjectRunnerDetails({ project }: { project: any }) {
         <Card fullWidth>
           <CardBody className="flex items-center justify-between text-center">
             <div className="flex flex-col">
-              <p className="text-md font-bold">AlertFlow Runners</p>
+              <p className="text-md font-bold">Shared Runners</p>
               <p className="text-sm text-default-500">
-                Use Runners from the official AlertFlow Runner Pool
+                Use Runners from the official Shared Runner Pool
               </p>
             </div>
             <Spacer y={2} />
             <Switch
-              isSelected={alertflowRunners}
+              isSelected={sharedRunners}
               size="sm"
               onValueChange={(value) => {
-                setAlertflowRunners(value);
+                setSharedRunners(value);
               }}
             />
           </CardBody>
@@ -200,9 +198,9 @@ export default function ProjectRunnerDetails({ project }: { project: any }) {
         </Card>
       </div>
       <CreateRunnerModal
-        alertflow_runner={false}
         disclosure={addRunnerModal}
         project={project}
+        shared_runner={false}
       />
     </>
   );
