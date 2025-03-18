@@ -95,7 +95,7 @@ export default function AlertsList({
                 <div className="flex flex-wrap justify-end gap-2">
                   <Chip color="default" radius="sm" size="md" variant="flat">
                     Flow:{" "}
-                    {flows.filter((f: any) => f.id === alert.flow_id)[0].name}
+                    {flows.filter((f: any) => f.id === alert.flow_id)[0]?.name}
                   </Chip>
                   {alerts.filter((a: any) => a.parent_id === alert.id).length >
                     0 && (

@@ -224,9 +224,7 @@ export default function EditFlowModal({
                     onSelectionChange={handleSelectRunner}
                   >
                     {runners
-                      .filter(
-                        (runner: any) => runner.alertflow_runner === false,
-                      )
+                      .filter((runner: any) => runner.shared_runner === false)
                       .map((runner: any) => (
                         <SelectItem key={runner.id}>{runner.name}</SelectItem>
                       ))}

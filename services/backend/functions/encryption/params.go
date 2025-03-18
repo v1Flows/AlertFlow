@@ -1,8 +1,6 @@
 package encryption
 
 import (
-	"github.com/v1Flows/alertFlow/services/backend/config"
-	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
@@ -11,9 +9,22 @@ import (
 	"errors"
 	"fmt"
 	"io"
+
+	"github.com/v1Flows/alertFlow/services/backend/config"
+	shared_models "github.com/v1Flows/shared-library/pkg/models"
 )
 
-func EncryptParams(actions []models.Actions) ([]models.Actions, error) {
+func IsEncrypted(value string) bool {
+	// Encrypted values should be at least as long as the AES block size
+	if len(value) < aes.BlockSize*2 {
+		return false
+	}
+
+	_, err := hex.DecodeString(value)
+	return err == nil
+}
+
+func EncryptParams(actions []shared_models.Action) ([]shared_models.Action, error) {
 	block, err := aes.NewCipher([]byte(config.Config.Encryption.Key))
 	if err != nil {
 		return nil, err
@@ -23,6 +34,11 @@ func EncryptParams(actions []models.Actions) ([]models.Actions, error) {
 		for j, param := range action.Params {
 			// Skip encryption if the value is empty
 			if param.Value == "" {
+				continue
+			}
+
+			// if param is a password and is encrypted, skip encryption
+			if param.Type == "password" && IsEncrypted(param.Value) {
 				continue
 			}
 
@@ -51,7 +67,7 @@ func EncryptParams(actions []models.Actions) ([]models.Actions, error) {
 	return actions, nil
 }
 
-func DecryptParams(actions []models.Actions) ([]models.Actions, error) {
+func DecryptParams(actions []shared_models.Action, decryptPasswords bool) ([]shared_models.Action, error) {
 	block, err := aes.NewCipher([]byte(config.Config.Encryption.Key))
 	if err != nil {
 		return nil, err
@@ -61,6 +77,10 @@ func DecryptParams(actions []models.Actions) ([]models.Actions, error) {
 		for j, param := range action.Params {
 			// Skip decryption if the value is empty
 			if param.Value == "" {
+				continue
+			}
+
+			if param.Type == "password" && !decryptPasswords {
 				continue
 			}
 

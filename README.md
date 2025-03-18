@@ -9,7 +9,7 @@ AlertFlow is a monitoring automation platform designed to streamline workflows w
 - [Features](#features)
 - [Preview](#preview)
 - [Self Hosting](#self-hosting)
-- [Runners](#runners)
+- [Runner](#runner)
 - [Project Structure](#project-structure)
 - [Local Development](#local-development)
 - [Contributing](#contributing)
@@ -63,12 +63,12 @@ docker run -p 80:3000 -e NEXT_PUBLIC_API_URL=https://api-url.com justnz/alertflo
 docker run -p 8080:8080 -v /your/config/path/config.yaml:/etc/alertflow/backend_config.yaml justnz/alertflow:backend-latest
 ```
 
-## Runners
-Runners are the key part of AlertFlow and provide the functionality of execution so called Workflows.
+## Runner
+The execution engine of AlertFlow is the v1Flows Runner. This component provides the functionality as a workflow engine so called Executions.
 
 To create / run your own runners you require to have a fully set up AlertFlow instance.
 
-Please see the repo [Runner](https://github.com/AlertFlow/runner) for more informations.
+Please see the repo [Runner](https://github.com/v1Flows/runner) for more informations.
 
 ## Project Structure
 

@@ -174,7 +174,7 @@ export default function CreateProjectModal({
                   />
                   <div className="flex flex-col gap-2">
                     <div className="flex-cols flex items-center gap-2">
-                      <p className="text-sm">AlertFlow Runners</p>
+                      <p className="text-sm">Shared Runners</p>
                       <Tooltip
                         content="We are hosting our own Runners to make the usage of
                         AlertFlow for you easier. With this option you can

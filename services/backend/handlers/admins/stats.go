@@ -50,12 +50,6 @@ func GetStats(context *gin.Context, db *bun.DB) {
 		return
 	}
 
-	usersPerPlanStats := admin_stats.UsersPerPlanStats(context, db)
-	if usersPerPlanStats == nil {
-		httperror.InternalServerError(context, "Error collecting stats", nil)
-		return
-	}
-
 	usersPerRoleStats := admin_stats.UsersPerRoleStats(context, db)
 	if usersPerRoleStats == nil {
 		httperror.InternalServerError(context, "Error collecting stats", nil)
@@ -70,7 +64,6 @@ func GetStats(context *gin.Context, db *bun.DB) {
 		"user_registration_stats": userRegistrationStats,
 		"project_creation_stats":  projectCreationStats,
 		"flow_creation_stats":     flowCreationStats,
-		"users_per_plan_stats":    usersPerPlanStats,
 		"users_per_role_stats":    usersPerRoleStats,
 	})
 }

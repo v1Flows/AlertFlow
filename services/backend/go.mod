@@ -1,6 +1,6 @@
 module github.com/v1Flows/alertFlow/services/backend
 
-go 1.23.5
+go 1.24.0
 
 require (
 	github.com/uptrace/bun v1.2.11
@@ -48,7 +48,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.34.0 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	golang.org/x/arch v0.12.0 // indirect
-	golang.org/x/net v0.35.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
@@ -65,6 +65,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/sirupsen/logrus v1.9.3
 	github.com/uptrace/bun/dialect/pgdialect v1.2.11
+	github.com/v1Flows/shared-library v1.0.5
 	github.com/zeromicro/go-zero v1.8.1
 	golang.org/x/sys v0.31.0 // indirect
 )

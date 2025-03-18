@@ -28,7 +28,7 @@ export default async function AdminRunnersPage() {
           />
           <div className="mt-4">
             <AlertflowRunnerList
-              runners={runners.data.alertflow_runners}
+              runners={runners.data.shared_runners}
               settings={settings.data.settings}
             />
           </div>

@@ -16,7 +16,7 @@ import { PlusIcon } from "@/components/icons";
 import CreateRunnerModal from "@/components/functions/runner/create";
 import UpdateSettings from "@/lib/fetch/admin/PUT/UpdateSettings";
 
-export default function AdminAlertFlowRunnerDetails({
+export default function AdminSharedRunnerDetails({
   settings,
 }: {
   settings: any;
@@ -25,30 +25,31 @@ export default function AdminAlertFlowRunnerDetails({
 
   const addRunnerModal = useDisclosure();
 
-  const [allowAlertFlowRunnerAutoJoin, setAllowAlertFlowRunnerAutoJoin] =
-    useState(settings.allow_alertflow_runner_auto_join);
-  const [allowAlertFlowRunnerJoin, setAllowAlertFlowRunnerJoin] = useState(
-    settings.allow_alertflow_runner_join,
+  const [allowSharedRunnerAutoJoin, setAllowSharedRunnerAutoJoin] = useState(
+    settings.allow_shared_runner_auto_join,
   );
-  const [alertflowRunnerAutoJoinToken, setAlertflowRunnerAutoJoinToken] =
-    useState(settings.alertflow_runner_auto_join_token);
+  const [allowSharedRunnerJoin, setAllowSharedRunnerJoin] = useState(
+    settings.allow_shared_runner_join,
+  );
+  const [sharedRunnerAutoJoinToken, setSharedRunnerAutoJoinToken] = useState(
+    settings.shared_runner_auto_join_token,
+  );
 
   useEffect(() => {
-    setAllowAlertFlowRunnerAutoJoin(settings.allow_alertflow_runner_auto_join);
-    setAllowAlertFlowRunnerJoin(settings.allow_alertflow_runner_join);
-    setAlertflowRunnerAutoJoinToken(settings.alertflow_runner_auto_join_token);
+    setAllowSharedRunnerAutoJoin(settings.allow_shared_runner_auto_join);
+    setAllowSharedRunnerJoin(settings.allow_shared_runner_join);
+    setSharedRunnerAutoJoinToken(settings.shared_runner_auto_join_token);
   }, [settings]);
 
   useEffect(() => {
     if (
-      allowAlertFlowRunnerAutoJoin ===
-        settings.allow_alertflow_runner_auto_join &&
-      allowAlertFlowRunnerJoin === settings.allow_alertflow_runner_join
+      allowSharedRunnerAutoJoin === settings.allow_shared_runner_auto_join &&
+      allowSharedRunnerJoin === settings.allow_shared_runner_join
     ) {
       return;
     }
     updateSettings();
-  }, [allowAlertFlowRunnerAutoJoin, allowAlertFlowRunnerJoin]);
+  }, [allowSharedRunnerAutoJoin, allowSharedRunnerJoin]);
 
   async function updateSettings() {
     const response = (await UpdateSettings(
@@ -62,9 +63,9 @@ export default function AdminAlertFlowRunnerDetails({
       settings.add_flow_actions,
       settings.start_executions,
       settings.receive_alerts,
-      allowAlertFlowRunnerAutoJoin,
-      allowAlertFlowRunnerJoin,
-      alertflowRunnerAutoJoinToken,
+      allowSharedRunnerAutoJoin,
+      allowSharedRunnerJoin,
+      sharedRunnerAutoJoinToken,
     )) as any;
 
     if (response.success) {
@@ -87,7 +88,7 @@ export default function AdminAlertFlowRunnerDetails({
   }
 
   function copyJoinToken() {
-    navigator.clipboard.writeText(alertflowRunnerAutoJoinToken);
+    navigator.clipboard.writeText(sharedRunnerAutoJoinToken);
     addToast({
       title: "Runner",
       description: "Join token copied to clipboard",
@@ -115,9 +116,9 @@ export default function AdminAlertFlowRunnerDetails({
             <Spacer y={2} />
             <Switch
               color="success"
-              isSelected={allowAlertFlowRunnerAutoJoin}
+              isSelected={allowSharedRunnerAutoJoin}
               size="sm"
-              onValueChange={setAllowAlertFlowRunnerAutoJoin}
+              onValueChange={setAllowSharedRunnerAutoJoin}
             />
           </CardBody>
         </Card>
@@ -133,9 +134,9 @@ export default function AdminAlertFlowRunnerDetails({
             <Spacer y={2} />
             <Switch
               color="success"
-              isSelected={allowAlertFlowRunnerJoin}
+              isSelected={allowSharedRunnerJoin}
               size="sm"
-              onValueChange={setAllowAlertFlowRunnerJoin}
+              onValueChange={setAllowSharedRunnerJoin}
             />
           </CardBody>
         </Card>
@@ -183,7 +184,7 @@ export default function AdminAlertFlowRunnerDetails({
         </Card>
       </div>
       <CreateRunnerModal
-        alertflow_runner
+        shared_runner
         disclosure={addRunnerModal}
         project={{
           id: "admin",

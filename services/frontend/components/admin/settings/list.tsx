@@ -57,9 +57,9 @@ export function Settings({ settings }: any) {
       addFlowActions,
       startExecutions,
       receiveAlerts,
-      settings.allow_alertflow_runner_auto_join,
-      settings.allow_alertflow_runner_join,
-      settings.alertflow_runner_auto_join_token,
+      settings.allow_shared_runner_auto_join,
+      settings.allow_shared_runner_join,
+      settings.shared_runner_auto_join_token,
     )) as any;
 
     if (response.success) {

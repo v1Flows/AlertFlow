@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 type Runners = {
   self_hosted_runners: [];
-  alertflow_runners: [];
+  shared_runners: [];
 };
 
 type ErrorResponse = {

@@ -338,14 +338,13 @@ export function DashboardHome({
                     <div>
                       {runners.filter(
                         (r: any) =>
-                          !r.alertflow_runner && !runnerHeartbeatStatus(r),
+                          !r.shared_runner && !runnerHeartbeatStatus(r),
                       ).length > 0 ? (
                         <p className="text-md font-bold text-danger">
                           {
                             runners.filter(
                               (r: any) =>
-                                !r.alertflow_runner &&
-                                !runnerHeartbeatStatus(r),
+                                !r.shared_runner && !runnerHeartbeatStatus(r),
                             ).length
                           }{" "}
                           with issues
@@ -362,7 +361,7 @@ export function DashboardHome({
             <DropdownMenu aria-label="Runner Problems">
               {runners
                 .filter(
-                  (r: any) => !r.alertflow_runner && !runnerHeartbeatStatus(r),
+                  (r: any) => !r.shared_runner && !runnerHeartbeatStatus(r),
                 )
                 .map((runner: any) => (
                   <DropdownItem

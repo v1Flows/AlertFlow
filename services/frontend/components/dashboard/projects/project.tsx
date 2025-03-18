@@ -139,7 +139,7 @@ export default function Project({
                   </div>
                   <div>
                     <p className="text-md font-bold">
-                      {project.alertflow_runners ? (
+                      {project.shared_runners ? (
                         <NumberFlow
                           locales="en-US" // Intl.NumberFormat locales
                           value={runners.length}
@@ -149,7 +149,7 @@ export default function Project({
                           locales="en-US" // Intl.NumberFormat locales
                           value={
                             runners.filter(
-                              (r: any) => r.alertflow_runner === false,
+                              (r: any) => r.shared_runner === false,
                             ).length
                           }
                         />

@@ -28,9 +28,9 @@ export default async function UpdateSettings(
   add_flow_actions: boolean,
   start_executions: boolean,
   receive_alerts: boolean,
-  allow_alertflow_runner_auto_join: boolean,
-  allow_alertflow_runner_join: boolean,
-  alertflow_runner_auto_join_token: string,
+  allow_shared_runner_auto_join: boolean,
+  allow_shared_runner_join: boolean,
+  shared_runner_auto_join_token: string,
 ): Promise<SuccessResponse | ErrorResponse> {
   try {
     const cookieStore = await cookies();
@@ -63,9 +63,9 @@ export default async function UpdateSettings(
           add_flow_actions,
           start_executions,
           receive_alerts,
-          allow_alertflow_runner_auto_join,
-          allow_alertflow_runner_join,
-          alertflow_runner_auto_join_token,
+          allow_shared_runner_auto_join,
+          allow_shared_runner_join,
+          shared_runner_auto_join_token,
         }),
       },
     );

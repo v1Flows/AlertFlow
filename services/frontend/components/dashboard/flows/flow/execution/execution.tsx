@@ -474,19 +474,21 @@ export function Execution({ flow, execution, runners, userDetails }: any) {
               ) : (
                 <div className="flex flex-col gap-2">
                   <Snippet fullWidth hideCopyButton hideSymbol radius="sm">
-                    <ScrollShadow className="max-h-[400px] max-w-[800px]">
-                      {step.messages.map((data: any, index: any) => (
-                        <p
-                          key={index}
-                          className="flex-cols flex items-center gap-1"
-                        >
-                          <Icon
-                            icon="hugeicons:arrow-right-double"
-                            width={16}
-                          />
-                          {data}
-                        </p>
-                      ))}
+                    <ScrollShadow className="max-h-[400px] max-w-screen">
+                      {step.messages.map((data: any, index: any) =>
+                        data.lines.map((line: any, index: any) => (
+                          <p
+                            key={index}
+                            className="flex-cols flex items-center gap-1"
+                          >
+                            <Icon
+                              icon="hugeicons:arrow-right-double"
+                              width={16}
+                            />
+                            {line}
+                          </p>
+                        )),
+                      )}
                     </ScrollShadow>
                   </Snippet>
 
@@ -695,7 +697,7 @@ export function Execution({ flow, execution, runners, userDetails }: any) {
         <Button
           color="default"
           variant="bordered"
-          onPress={() => router.push(`/flows/${flow.id}`)}
+          onPress={() => router.back()}
         >
           <Icon icon="hugeicons:link-backward" width={20} />
           Back
