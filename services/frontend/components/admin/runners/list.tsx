@@ -125,7 +125,7 @@ export function SelfHostedRunnerList({ runners, projects }: any) {
               Actions: {runner.actions.length}
             </p>
             <p className="text-sm text-default-500">
-              Alert Endpoints: {runner.alert_endpoints.length}
+              Endpoints: {runner.endpoints.length}
             </p>
           </div>
         );
@@ -264,31 +264,31 @@ export function SelfHostedRunnerList({ runners, projects }: any) {
         >
           <TableHeader>
             <TableColumn key="name" align="start">
-              NAME
+              Name
             </TableColumn>
-            <TableColumn key="runner_version" align="start">
-              VERSION
+            <TableColumn key="version" align="start">
+              Version
             </TableColumn>
             <TableColumn key="project" align="start">
-              PROJECT
+              Project
             </TableColumn>
             <TableColumn key="status" align="start">
-              STATUS
+              Status
             </TableColumn>
             <TableColumn key="registered" align="start">
-              REGISTERED
+              Registered
             </TableColumn>
             <TableColumn key="executing_job" align="start">
-              EXECUTING JOB
+              Executing Job
             </TableColumn>
             <TableColumn key="last_heartbeat" align="start">
-              LAST HEARTBEAT
+              Last Heartbeat
             </TableColumn>
             <TableColumn key="functions" align="start">
-              FUNCTIONS
+              Plugins
             </TableColumn>
             <TableColumn key="actions" align="center">
-              ACTIONS
+              Actions
             </TableColumn>
           </TableHeader>
           <TableBody emptyContent="No rows to display." items={items}>

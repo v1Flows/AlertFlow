@@ -73,9 +73,7 @@ func UpdateFlow(context *gin.Context, db *bun.DB) {
 	if flow.GroupAlertsIdentifier != "" {
 		columns = append(columns, "group_alerts_identifier")
 	}
-	if flow.AlertThreshold != 0 {
-		columns = append(columns, "alert_threshold")
-	}
+	columns = append(columns, "alert_threshold")
 	columns = append(columns, "updated_at")
 
 	_, err = db.NewUpdate().Model(&flow).Column(columns...).Where("id = ?", flowID).Exec(context)

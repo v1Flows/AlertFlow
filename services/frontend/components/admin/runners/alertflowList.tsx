@@ -123,12 +123,12 @@ export function AlertflowRunnerList({ runners, settings }: any) {
               Actions: {runner.actions.length}
             </p>
             <p className="text-sm text-default-500">
-              Alert Endpoints: {runner.alert_endpoints.length}
+              Endpoints: {runner.endpoints.length}
             </p>
           </div>
         );
-      case "runner_version":
-        return <p>{runner.runner_version ? runner.runner_version : "N/A"}</p>;
+      case "version":
+        return <p>{runner.version ? runner.version : "N/A"}</p>;
       case "actions":
         return (
           <div className="relative flex items-center justify-center gap-2">
@@ -240,9 +240,7 @@ export function AlertflowRunnerList({ runners, settings }: any) {
   return (
     <main>
       <div className="mb-2 flex items-center justify-between">
-        <p className="mb-0 text-2xl font-bold text-primary">
-          AlertFlow Runners
-        </p>
+        <p className="mb-0 text-2xl font-bold text-primary">Shared Runners</p>
       </div>
       <AdminAlertFlowRunnerDetails settings={settings} />
       <Spacer y={2} />
@@ -266,31 +264,31 @@ export function AlertflowRunnerList({ runners, settings }: any) {
         >
           <TableHeader>
             <TableColumn key="name" align="start">
-              NAME
+              Name
             </TableColumn>
             <TableColumn key="version" align="start">
-              VERSION
+              Version
             </TableColumn>
             <TableColumn key="project" align="start">
-              PROJECT
+              Project
             </TableColumn>
             <TableColumn key="status" align="start">
-              STATUS
+              Status
             </TableColumn>
             <TableColumn key="registered" align="start">
-              REGISTERED
+              Registered
             </TableColumn>
             <TableColumn key="executing_job" align="start">
-              EXECUTING JOB
+              Executing Job
             </TableColumn>
             <TableColumn key="last_heartbeat" align="start">
-              LAST HEARTBEAT
+              Last Heartbeat
             </TableColumn>
             <TableColumn key="functions" align="start">
-              FUNCTIONS
+              Plugins
             </TableColumn>
             <TableColumn key="actions" align="center">
-              ACTIONS
+              Actions
             </TableColumn>
           </TableHeader>
           <TableBody emptyContent="No rows to display." items={items}>

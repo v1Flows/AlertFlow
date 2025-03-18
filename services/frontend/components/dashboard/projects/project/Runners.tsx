@@ -86,7 +86,7 @@ export default function Runners({ runners, project, user, members }: any) {
       <Divider className="mb-4" />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {runners
-          .filter((runner: any) => runner.alertflow_runner === false)
+          .filter((runner: any) => runner.shared_runner === false)
           .sort((a: any, b: any) => {
             const aStatus = heartbeatStatus(a) ? 1 : 0;
             const bStatus = heartbeatStatus(b) ? 1 : 0;
@@ -214,14 +214,14 @@ export default function Runners({ runners, project, user, members }: any) {
       </div>
 
       <Spacer y={4} />
-      <p className="text-lg font-bold">AlertFlow Runners</p>
+      <p className="text-lg font-bold">Shared Runners</p>
       <Divider className="mb-4" />
-      {project.alertflow_runners === true && (
+      {project.shared_runners === true && (
         <div>
           <div className="grid gap-4 lg:grid-cols-2">
             {runners.map(
               (runner: any) =>
-                runner.alertflow_runner === true && (
+                runner.shared_runner === true && (
                   <Card key={runner.id}>
                     <CardHeader className="items-center justify-between">
                       <div className="flex flex-col gap-1">
@@ -368,18 +368,18 @@ export default function Runners({ runners, project, user, members }: any) {
           </div>
         </div>
       )}
-      {project.alertflow_runners === false && (
+      {project.shared_runners === false && (
         <div>
           <p className="my-4 text-sm font-bold text-default-500">
-            AlertFlow runners are disabled
+            Shared runners are disabled
           </p>
         </div>
       )}
       <RunnerDrawer disclosure={showRunnerDrawer} runner={targetRunner} />
       <CreateRunnerModal
-        alertflow_runner={false}
         disclosure={addRunnerModal}
         project={project}
+        shared_runner={false}
       />
       <DeleteRunnerModal disclosure={deleteRunnerModal} runner={targetRunner} />
     </main>

@@ -1,11 +1,12 @@
 package projects
 
 import (
+	"errors"
+	"net/http"
+
 	"github.com/v1Flows/alertFlow/services/backend/functions/gatekeeper"
 	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
 	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
-	"errors"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/uptrace/bun"
@@ -26,7 +27,7 @@ func GetProjectRunners(context *gin.Context, db *bun.DB) {
 	}
 
 	runners := make([]models.Runners, 0)
-	err = db.NewSelect().Model(&runners).Where("project_id = ? OR alertflow_runner = true", projectID).Order("name ASC").Order("last_heartbeat DESC").Scan(context)
+	err = db.NewSelect().Model(&runners).Where("project_id = ? OR shared_runner = true", projectID).Order("name ASC").Order("last_heartbeat DESC").Scan(context)
 	if err != nil {
 		httperror.InternalServerError(context, "Error receiving project runners from db", err)
 		return

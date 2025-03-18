@@ -26,11 +26,11 @@ import ErrorCard from "@/components/error/ErrorCard";
 export default function CreateRunnerModal({
   disclosure,
   project,
-  alertflow_runner,
+  shared_runner,
 }: {
   disclosure: UseDisclosureReturn;
   project: any;
-  alertflow_runner: any;
+  shared_runner: any;
 }) {
   const router = useRouter();
   const { isOpen, onOpenChange } = disclosure;
@@ -54,7 +54,7 @@ export default function CreateRunnerModal({
     const response = (await AddRunner({
       projectId: project.id ? project.id : "none",
       name,
-      alertflow_runner,
+      shared_runner,
     })) as any;
 
     if (!response) {

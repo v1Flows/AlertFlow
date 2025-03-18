@@ -9,6 +9,7 @@ import (
 	"github.com/v1Flows/alertFlow/services/backend/functions/auth"
 	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
 	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
+	shared_models "github.com/v1Flows/shared-library/pkg/models"
 
 	"math/rand"
 
@@ -25,7 +26,7 @@ func RegisterRunner(context *gin.Context, db *bun.DB) {
 	}
 
 	var runner models.Runners
-	var autoRunner models.IncomingAutoRunners
+	var autoRunner shared_models.IncomingAutoRunners
 
 	if runnerType == "project_auto_runner" {
 		if err := context.ShouldBindJSON(&autoRunner); err != nil {
@@ -33,14 +34,14 @@ func RegisterRunner(context *gin.Context, db *bun.DB) {
 			return
 		}
 
-		autoRunnerRegister(projectID, models.Runners{
-			Registered:     autoRunner.Registered,
-			LastHeartbeat:  autoRunner.LastHeartbeat,
-			Version:        autoRunner.Version,
-			Mode:           autoRunner.Mode,
-			Plugins:        autoRunner.Plugins,
-			Actions:        autoRunner.Actions,
-			AlertEndpoints: autoRunner.AlertEndpoints,
+		autoRunnerRegister(projectID, shared_models.Runners{
+			Registered:    autoRunner.Registered,
+			LastHeartbeat: autoRunner.LastHeartbeat,
+			Version:       autoRunner.Version,
+			Mode:          autoRunner.Mode,
+			Plugins:       autoRunner.Plugins,
+			Actions:       autoRunner.Actions,
+			Endpoints:     autoRunner.Endpoints,
 		}, context, db)
 	} else if runnerType == "alertflow_auto_runner" {
 		if err := context.ShouldBindJSON(&autoRunner); err != nil {
@@ -48,14 +49,14 @@ func RegisterRunner(context *gin.Context, db *bun.DB) {
 			return
 		}
 
-		alertflowAutoRunnerRegister(models.Runners{
-			Registered:     autoRunner.Registered,
-			LastHeartbeat:  autoRunner.LastHeartbeat,
-			Version:        autoRunner.Version,
-			Mode:           autoRunner.Mode,
-			Plugins:        autoRunner.Plugins,
-			Actions:        autoRunner.Actions,
-			AlertEndpoints: autoRunner.AlertEndpoints,
+		alertflowAutoRunnerRegister(shared_models.Runners{
+			Registered:    autoRunner.Registered,
+			LastHeartbeat: autoRunner.LastHeartbeat,
+			Version:       autoRunner.Version,
+			Mode:          autoRunner.Mode,
+			Plugins:       autoRunner.Plugins,
+			Actions:       autoRunner.Actions,
+			Endpoints:     autoRunner.Endpoints,
 		}, context, db)
 	} else {
 		if err := context.ShouldBindJSON(&runner); err != nil {
@@ -112,7 +113,7 @@ func runnerRegister(runnerID string, projectID string, runner models.Runners, co
 	context.JSON(http.StatusCreated, gin.H{"result": "success"})
 }
 
-func autoRunnerRegister(projectID string, runner models.Runners, context *gin.Context, db *bun.DB) {
+func autoRunnerRegister(projectID string, runner shared_models.Runners, context *gin.Context, db *bun.DB) {
 	// check if runner join is disabled for project
 	var project models.Projects
 	err := db.NewSelect().Model(&project).Where("id = ?", projectID).Scan(context)
@@ -148,7 +149,7 @@ func autoRunnerRegister(projectID string, runner models.Runners, context *gin.Co
 	context.JSON(http.StatusCreated, gin.H{"result": "success", "runner_id": runner.ID})
 }
 
-func alertflowAutoRunnerRegister(runner models.Runners, context *gin.Context, db *bun.DB) {
+func alertflowAutoRunnerRegister(runner shared_models.Runners, context *gin.Context, db *bun.DB) {
 	// check if runner join is disabled for alertflow
 	var settings models.Settings
 	err := db.NewSelect().Model(&settings).Where("id = 1").Scan(context)
@@ -158,21 +159,21 @@ func alertflowAutoRunnerRegister(runner models.Runners, context *gin.Context, db
 	}
 
 	// check if auto runners is disabled for alertflow
-	if !settings.AllowAlertFlowRunnerAutoJoin {
+	if !settings.AllowSharedRunnerAutoJoin {
 		httperror.StatusBadRequest(context, "Auto runner join is disabled for AlertFlow", errors.New("auto runner join is disabled for alertflow"))
 		return
 	}
 
-	if !settings.AllowAlertFlowRunnerJoin {
+	if !settings.AllowSharedRunnerJoin {
 		httperror.StatusBadRequest(context, "Runner join is not disabled for AlertFlow", errors.New("runner join is not disabled for alertflow"))
 		return
 	}
 
 	// generate random id for runner
 	runner.ID = uuid.New()
-	runner.Name = "AlertFlow Auto Runner " + strconv.Itoa(rand.Intn(100000))
+	runner.Name = "Shared Auto Runner " + strconv.Itoa(rand.Intn(100000))
 	runner.ProjectID = "admin"
-	runner.AlertFlowRunner = true
+	runner.SharedRunner = true
 	runner.AutoRunner = true
 	runner.RegisteredAt = time.Now()
 

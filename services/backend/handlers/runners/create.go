@@ -1,13 +1,14 @@
 package runners
 
 import (
+	"errors"
+	"net/http"
+
 	"github.com/v1Flows/alertFlow/services/backend/functions/auth"
 	"github.com/v1Flows/alertFlow/services/backend/functions/gatekeeper"
 	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
 	functions_runner "github.com/v1Flows/alertFlow/services/backend/functions/runner"
 	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
-	"errors"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -34,7 +35,7 @@ func CreateRunner(context *gin.Context, db *bun.DB) {
 
 	runner.ID = uuid.New()
 
-	if runner.AlertFlowRunner {
+	if runner.SharedRunner {
 		userID, err := auth.GetUserIDFromToken(context.GetHeader("Authorization"))
 		if err != nil {
 			httperror.InternalServerError(context, "Error collecting userID from token", err)
@@ -52,7 +53,7 @@ func CreateRunner(context *gin.Context, db *bun.DB) {
 		}
 	}
 
-	_, err = db.NewInsert().Model(&runner).Column("id", "name", "project_id", "alertflow_runner").Exec(context)
+	_, err = db.NewInsert().Model(&runner).Column("id", "name", "project_id", "shared_runner").Exec(context)
 	if err != nil {
 		httperror.InternalServerError(context, "Error creating runner on db", err)
 		return

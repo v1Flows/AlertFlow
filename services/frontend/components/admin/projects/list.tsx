@@ -98,15 +98,15 @@ export function ProjectList({ projects, members }: any) {
               ))}
           </AvatarGroup>
         );
-      case "alertflow_runners":
+      case "shared_runners":
         return (
           <Chip
             className="capitalize"
-            color={project.alertflow_runners ? "success" : "danger"}
+            color={project.shared_runners ? "success" : "danger"}
             size="sm"
             variant="flat"
           >
-            {project.alertflow_runners ? "Enabled" : "Disabled"}
+            {project.shared_runners ? "Enabled" : "Disabled"}
           </Chip>
         );
       case "status":
@@ -274,25 +274,25 @@ export function ProjectList({ projects, members }: any) {
         >
           <TableHeader>
             <TableColumn key="name" align="start">
-              NAME
+              Name
             </TableColumn>
             <TableColumn key="id" align="start">
               ID
             </TableColumn>
             <TableColumn key="members" align="start">
-              MEMBERS
+              Members
             </TableColumn>
             <TableColumn key="status" align="start">
-              STATUS
+              Status
             </TableColumn>
-            <TableColumn key="alertflow_runners" align="start">
-              ALERTFLOW RUNNERS
+            <TableColumn key="shared_runners" align="start">
+              Shared Runners
             </TableColumn>
             <TableColumn key="created_at" align="start">
-              CREATED AT
+              Created At
             </TableColumn>
             <TableColumn key="actions" align="center">
-              ACTIONS
+              Actions
             </TableColumn>
           </TableHeader>
           <TableBody emptyContent="No rows to display." items={items}>
