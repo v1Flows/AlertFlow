@@ -1,11 +1,12 @@
 package admins
 
 import (
-	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
-	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/v1Flows/alertFlow/services/backend/functions/httperror"
+	"github.com/v1Flows/alertFlow/services/backend/pkg/models"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
@@ -29,13 +30,9 @@ func UpdateUser(context *gin.Context, db *bun.DB) {
 		return
 	}
 
-	if user.Plan != userDB.Plan {
-		user.PlanValidUntil = time.Now().AddDate(999, 0, 0)
-	}
-
 	user.UpdatedAt = time.Now()
 	user.Role = strings.ToLower(user.Role)
-	_, err = db.NewUpdate().Model(&user).Column("username", "email", "role", "plan", "updated_at", "plan_valid_until").Where("id = ?", userID).Exec(context)
+	_, err = db.NewUpdate().Model(&user).Column("username", "email", "role", "updated_at").Where("id = ?", userID).Exec(context)
 	if err != nil {
 		httperror.InternalServerError(context, "Error updating user on db", err)
 		return
